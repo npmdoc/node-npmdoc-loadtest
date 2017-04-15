@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/alexfernandez/loadtest"
-
-    >loadtest (v2.3.0)</a>
+    <a href="https://github.com/alexfernandez/loadtest">loadtest (v2.3.0)</a>
 </h1>
 <h4>Run load tests for your web application. Mostly ab-compatible interface, with an option to force requests per second. Includes an API for automated load testing.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.loadtest">module loadtest</a><ol>
 
@@ -98,7 +91,7 @@
 {
 	if (!options.url)
 	{
-		log.error(&#x27;Missing URL in options&#x27;);
+		log.error('Missing URL in options');
 		return;
 	}
 	options.concurrency = options.concurrency || 1;
@@ -110,21 +103,21 @@
 	{
 		log.level = Log.DEBUG;
 	}
-	if (!options.url.startsWith(&#x27;http://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;https://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;ws://&#x27;))
+	if (!options.url.startsWith('http://') &amp;&amp; !options.url.startsWith('https://') &amp;&amp; !options.url.startsWith('ws://'))
 	{
-		log.error(&#x27;Invalid URL %s, must be http://, https:// or ws://&#x27;, options.url);
+		log.error('Invalid URL %s, must be http://, https:// or ws://', options.url);
 		return;
 	}
-	if (callback &#x26;&#x26; !(&#x27;quiet&#x27; in options))
+	if (callback &amp;&amp; !('quiet' in options))
 	{
 		options.quiet = true;
 	}
 
-	if (options.url.startsWith(&#x27;ws:&#x27;))
+	if (options.url.startsWith('ws:'))
 	{
 		if (options.requestsPerSecond)
 		{
-			log.error(&#x27;&#x22;requestsPerSecond&#x22; not supported for WebSockets&#x27;);
+			log.error('"requestsPerSecond" not supported for WebSockets');
 		}
 	}
 
@@ -135,18 +128,18 @@
     <li>example usage<pre class="apidocCodePre">...
 To run a load test, just call the exported function `loadTest()` with a set of options and an optional callback:
 
-var loadtest = require(&#x27;loadtest&#x27;);
+var loadtest = require('loadtest');
 var options = {
-    url: &#x27;http://localhost:8000&#x27;,
+    url: 'http://localhost:8000',
     maxRequests: 1000,
 };
 loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(error, result)
 {
     if (error)
     {
-        return console.error(&#x27;Got an error: %s&#x27;, error);
+        return console.error('Got an error: %s', error);
     }
-    console.log(&#x27;Tests run successfully&#x27;);
+    console.log('Tests run successfully');
 });
 ...</pre></li>
     </ul>
@@ -176,7 +169,7 @@ loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(e
 
 To start the test server use the exported function `startServer()` with a set of options and an optional callback:
 
-    var testserver = require(&#x27;testserver&#x27;);
+    var testserver = require('testserver');
     var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
 
 This function returns an HTTP server which can be `close()`d when it is no longer useful.
@@ -196,3 +189,4 @@ The following options are available.
     ]
 </div>
 </div>
+</body></html>
