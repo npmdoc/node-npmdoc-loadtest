@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/alexfernandez/loadtest"
-
-    >loadtest (v2.3.0)</a>
+    <a href="https://github.com/alexfernandez/loadtest">loadtest (v2.3.0)</a>
 </h1>
 <h4>Run load tests for your web application. Mostly ab-compatible interface, with an option to force requests per second. Includes an API for automated load testing.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.loadtest">module loadtest</a><ol>
 
@@ -367,7 +360,7 @@
 {
 	if (!options.url)
 	{
-		log.error(&#x27;Missing URL in options&#x27;);
+		log.error('Missing URL in options');
 		return;
 	}
 	options.concurrency = options.concurrency || 1;
@@ -379,21 +372,21 @@
 	{
 		log.level = Log.DEBUG;
 	}
-	if (!options.url.startsWith(&#x27;http://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;https://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;ws://&#x27;))
+	if (!options.url.startsWith('http://') &amp;&amp; !options.url.startsWith('https://') &amp;&amp; !options.url.startsWith('ws://'))
 	{
-		log.error(&#x27;Invalid URL %s, must be http://, https:// or ws://&#x27;, options.url);
+		log.error('Invalid URL %s, must be http://, https:// or ws://', options.url);
 		return;
 	}
-	if (callback &#x26;&#x26; !(&#x27;quiet&#x27; in options))
+	if (callback &amp;&amp; !('quiet' in options))
 	{
 		options.quiet = true;
 	}
 
-	if (options.url.startsWith(&#x27;ws:&#x27;))
+	if (options.url.startsWith('ws:'))
 	{
 		if (options.requestsPerSecond)
 		{
-			log.error(&#x27;&#x22;requestsPerSecond&#x22; not supported for WebSockets&#x27;);
+			log.error('"requestsPerSecond" not supported for WebSockets');
 		}
 	}
 
@@ -404,18 +397,18 @@
     <li>example usage<pre class="apidocCodePre">...
 To run a load test, just call the exported function `loadTest()` with a set of options and an optional callback:
 
-var loadtest = require(&#x27;loadtest&#x27;);
+var loadtest = require('loadtest');
 var options = {
-    url: &#x27;http://localhost:8000&#x27;,
+    url: 'http://localhost:8000',
     maxRequests: 1000,
 };
 loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(error, result)
 {
     if (error)
     {
-        return console.error(&#x27;Got an error: %s&#x27;, error);
+        return console.error('Got an error: %s', error);
     }
-    console.log(&#x27;Tests run successfully&#x27;);
+    console.log('Tests run successfully');
 });
 ...</pre></li>
     </ul>
@@ -445,7 +438,7 @@ loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(e
 
 To start the test server use the exported function `startServer()` with a set of options and an optional callback:
 
-    var testserver = require(&#x27;testserver&#x27;);
+    var testserver = require('testserver');
     var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
 
 This function returns an HTTP server which can be `close()`d when it is no longer useful.
@@ -520,25 +513,25 @@ The following options are available.
 			addHeader(header, headers);
 		});
 	}
-	else if (typeof rawHeaders == &#x27;string&#x27;)
+	else if (typeof rawHeaders == 'string')
 	{
 		addHeader(rawHeaders, headers);
 	}
 	else
 	{
-		console.error(&#x27;Invalid header structure %j, it should be an array&#x27;);
+		console.error('Invalid header structure %j, it should be an array');
 	}
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-			raw: &#x27;k:v:w&#x27;,
-			headers: { &#x27;k&#x27;: &#x27;v:w&#x27; }
+			raw: 'k:v:w',
+			headers: { 'k': 'v:w' }
 		}
 	];
 	tests.forEach(function(test)
 	{
 		var headers = {};
 		exports.<span class="apidocCodeKeywordSpan">addHeaders</span>(test.raw, headers);
-		testing.assertEquals(headers, test.headers, &#x27;Wrong headers&#x27;, callback);
+		testing.assertEquals(headers, test.headers, 'Wrong headers', callback);
 	});
 	testing.success(callback);
 }
@@ -559,24 +552,24 @@ The following options are available.
     <ul>
     <li>description and source-code<pre class="apidocCodePre">addUserAgent = function (headers)
 {
-	if(!headers[&#x27;user-agent&#x27;])
+	if(!headers['user-agent'])
 	{
-	  headers[&#x27;user-agent&#x27;] = &#x27;node.js loadtest bot&#x27;;
+	  headers['user-agent'] = 'node.js loadtest bot';
 	}
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 		}
 		else
 		{
-			log.error(&#x27;Unrecognized body: %s&#x27;, typeof this.params.body);
+			log.error('Unrecognized body: %s', typeof this.params.body);
 		}
-		this.options.headers[&#x27;Content-Type&#x27;] = this.params.contentType || &#x27;text/plain&#x27;;
+		this.options.headers['Content-Type'] = this.params.contentType || 'text/plain';
 	}
 	headers.<span class="apidocCodeKeywordSpan">addUserAgent</span>(this.options.headers);
 	if (this.params.secureProtocol) {
 		this.options.secureProtocol = this.params.secureProtocol;
 	}
-	log.debug(&#x27;Options: %j&#x27;,this.options);
+	log.debug('Options: %j',this.options);
 };
 ...</pre></li>
     </ul>
@@ -631,7 +624,7 @@ if (__filename == process.argv[1])
     <li>example usage<pre class="apidocCodePre">...
 {
 	var options = {
-		url: &#x27;http://localhost:7357/&#x27;,
+		url: 'http://localhost:7357/',
 		maxSeconds: 0.1,
 		concurrency: 1,
 		quiet: true,
@@ -691,7 +684,7 @@ if (__filename == process.argv[1])
     <ul>
     <li>description and source-code<pre class="apidocCodePre">test = function (callback)
 {
-	log.debug(&#x27;Running all tests&#x27;);
+	log.debug('Running all tests');
 	testing.run([testIntegration, testDelay, testWSIntegration], 4000, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -725,7 +718,7 @@ if (__filename == process.argv[1])
 {
 	if (!options.url)
 	{
-		log.error(&#x27;Missing URL in options&#x27;);
+		log.error('Missing URL in options');
 		return;
 	}
 	options.concurrency = options.concurrency || 1;
@@ -737,21 +730,21 @@ if (__filename == process.argv[1])
 	{
 		log.level = Log.DEBUG;
 	}
-	if (!options.url.startsWith(&#x27;http://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;https://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;ws://&#x27;))
+	if (!options.url.startsWith('http://') &amp;&amp; !options.url.startsWith('https://') &amp;&amp; !options.url.startsWith('ws://'))
 	{
-		log.error(&#x27;Invalid URL %s, must be http://, https:// or ws://&#x27;, options.url);
+		log.error('Invalid URL %s, must be http://, https:// or ws://', options.url);
 		return;
 	}
-	if (callback &#x26;&#x26; !(&#x27;quiet&#x27; in options))
+	if (callback &amp;&amp; !('quiet' in options))
 	{
 		options.quiet = true;
 	}
 
-	if (options.url.startsWith(&#x27;ws:&#x27;))
+	if (options.url.startsWith('ws:'))
 	{
 		if (options.requestsPerSecond)
 		{
-			log.error(&#x27;&#x22;requestsPerSecond&#x22; not supported for WebSockets&#x27;);
+			log.error('"requestsPerSecond" not supported for WebSockets');
 		}
 	}
 
@@ -762,18 +755,18 @@ if (__filename == process.argv[1])
     <li>example usage<pre class="apidocCodePre">...
 To run a load test, just call the exported function `loadTest()` with a set of options and an optional callback:
 
-var loadtest = require(&#x27;loadtest&#x27;);
+var loadtest = require('loadtest');
 var options = {
-    url: &#x27;http://localhost:8000&#x27;,
+    url: 'http://localhost:8000',
     maxRequests: 1000,
 };
 loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(error, result)
 {
     if (error)
     {
-        return console.error(&#x27;Got an error: %s&#x27;, error);
+        return console.error('Got an error: %s', error);
     }
-    console.log(&#x27;Tests run successfully&#x27;);
+    console.log('Tests run successfully');
 });
 ...</pre></li>
     </ul>
@@ -796,7 +789,7 @@ loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(e
 {
 	if (!options.url)
 	{
-		log.error(&#x27;Missing URL in options&#x27;);
+		log.error('Missing URL in options');
 		return;
 	}
 	options.concurrency = options.concurrency || 1;
@@ -808,21 +801,21 @@ loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(e
 	{
 		log.level = Log.DEBUG;
 	}
-	if (!options.url.startsWith(&#x27;http://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;https://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;ws://&#x27;))
+	if (!options.url.startsWith('http://') &amp;&amp; !options.url.startsWith('https://') &amp;&amp; !options.url.startsWith('ws://'))
 	{
-		log.error(&#x27;Invalid URL %s, must be http://, https:// or ws://&#x27;, options.url);
+		log.error('Invalid URL %s, must be http://, https:// or ws://', options.url);
 		return;
 	}
-	if (callback &#x26;&#x26; !(&#x27;quiet&#x27; in options))
+	if (callback &amp;&amp; !('quiet' in options))
 	{
 		options.quiet = true;
 	}
 
-	if (options.url.startsWith(&#x27;ws:&#x27;))
+	if (options.url.startsWith('ws:'))
 	{
 		if (options.requestsPerSecond)
 		{
-			log.error(&#x27;&#x22;requestsPerSecond&#x22; not supported for WebSockets&#x27;);
+			log.error('"requestsPerSecond" not supported for WebSockets');
 		}
 	}
 
@@ -833,18 +826,18 @@ loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(e
     <li>example usage<pre class="apidocCodePre">...
 To run a load test, just call the exported function `loadTest()` with a set of options and an optional callback:
 
-var loadtest = require(&#x27;loadtest&#x27;);
+var loadtest = require('loadtest');
 var options = {
-    url: &#x27;http://localhost:8000&#x27;,
+    url: 'http://localhost:8000',
     maxRequests: 1000,
 };
 loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(error, result)
 {
     if (error)
     {
-        return console.error(&#x27;Got an error: %s&#x27;, error);
+        return console.error('Got an error: %s', error);
     }
-    console.log(&#x27;Tests run successfully&#x27;);
+    console.log('Tests run successfully');
 });
 ...</pre></li>
     </ul>
@@ -891,7 +884,7 @@ if (__filename == process.argv[1])
     <ul>
     <li>description and source-code<pre class="apidocCodePre">test = function (callback)
 {
-	log.debug(&#x27;Running all tests&#x27;);
+	log.debug('Running all tests');
 	testing.run([testRequestGenerator], 4000, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -937,7 +930,7 @@ if (__filename == process.argv[1])
 
 To start the test server use the exported function `startServer()` with a set of options and an optional callback:
 
-    var testserver = require(&#x27;testserver&#x27;);
+    var testserver = require('testserver');
     var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
 
 This function returns an HTTP server which can be `close()`d when it is no longer useful.
@@ -978,7 +971,7 @@ The following options are available.
 
 To start the test server use the exported function `startServer()` with a set of options and an optional callback:
 
-    var testserver = require(&#x27;testserver&#x27;);
+    var testserver = require('testserver');
     var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
 
 This function returns an HTTP server which can be `close()`d when it is no longer useful.
@@ -1053,7 +1046,7 @@ if (__filename == process.argv[1])
 		counter ++;
 		var diff = (Date.now() - start) - counter * delayMs;
 		var timeout = Math.floor(delayMs - diff);
-		if (timeout &#x3c;= 0)
+		if (timeout &lt;= 0)
 		{
 			return delayed();
 		}
@@ -1067,7 +1060,7 @@ if (__filename == process.argv[1])
 	{
 		var diff = Date.now() - start;
 		var drift = diff / delayMs - counter;
-		log.debug(&#x27;Seconds: &#x27; + Math.round(diff / 1000) + &#x27;, counter: &#x27; + counter + &#x27;, drift: &#x27; + drift);
+		log.debug('Seconds: ' + Math.round(diff / 1000) + ', counter: ' + counter + ', drift: ' + drift);
 	};
 
 	/**
@@ -1178,7 +1171,7 @@ if (__filename == process.argv[1])
 	{
 		if (!(requestId in requests))
 		{
-			log.debug(&#x27;Message id &#x27; + requestId + &#x27; not found&#x27;);
+			log.debug('Message id ' + requestId + ' not found');
 			return -2;
 		}
 		if (!running)
@@ -1197,14 +1190,14 @@ if (__filename == process.argv[1])
 	 */
 	function add(time, errorCode)
 	{
-		log.debug(&#x27;New value: %s&#x27;, time);
+		log.debug('New value: %s', time);
 		partialTime += time;
 		partialRequests++;
 		totalTime += time;
 		totalRequests++;
 		if (errorCode)
 		{
-			errorCode = &#x27;&#x27; + errorCode;
+			errorCode = '' + errorCode;
 			partialErrors++;
 			totalErrors++;
 			if (!(errorCode in errorCodes))
@@ -1213,19 +1206,19 @@ if (__filename == process.argv[1])
 			}
 			errorCodes[errorCode] += 1;
 		}
-		log.debug(&#x27;Partial requests: %s&#x27;, partialRequests);
+		log.debug('Partial requests: %s', partialRequests);
 		var rounded = Math.floor(time);
-		if (rounded &#x3e; maxLatencyMs)
+		if (rounded &gt; maxLatencyMs)
 		{
 			maxLatencyMs = rounded;
 		}
-		if (rounded &#x3c; minLatencyMs)
+		if (rounded &lt; minLatencyMs)
 		{
 			minLatencyMs = rounded;
 		}
 		if (!histogramMs[rounded])
 		{
-			log.debug(&#x27;Initializing histogram for %s&#x27;, rounded);
+			log.debug('Initializing histogram for %s', rounded);
 			histogramMs[rounded] = 0;
 		}
 		histogramMs[rounded] += 1;
@@ -1246,17 +1239,17 @@ if (__filename == process.argv[1])
 			meanLatencyMs: Math.round(meanTime * 10) / 10,
 			rps: Math.round(partialRequests / elapsedSeconds)
 		};
-		var percent = &#x27;&#x27;;
+		var percent = '';
 		if (options.maxRequests)
 		{
-			percent = &#x27; (&#x27; + Math.round(100 * totalRequests / options.maxRequests) + &#x27;%)&#x27;;
+			percent = ' (' + Math.round(100 * totalRequests / options.maxRequests) + '%)';
 		}
-		log.info(&#x27;Requests: %s%s, requests per second: %s, mean latency: %s ms&#x27;, totalRequests, percent, results.rps, results.meanLatencyMs
+		log.info('Requests: %s%s, requests per second: %s, mean latency: %s ms', totalRequests, percent, results.rps, results.meanLatencyMs
 );
 		if (totalErrors)
 		{
 			percent = Math.round(100 * 10 * totalErrors / totalRequests) / 10;
-			log.info(&#x27;Errors: %s, accumulated errors: %s, %s% of total requests&#x27;, partialErrors, totalErrors, percent);
+			log.info('Errors: %s, accumulated errors: %s, %s% of total requests', partialErrors, totalErrors, percent);
 		}
 		partialTime = 0;
 		partialRequests = 0;
@@ -1287,10 +1280,10 @@ if (__filename == process.argv[1])
 	 */
 	function isFinished()
 	{
-		log.debug(&#x27;Total requests %s, max requests: %s&#x27;, totalRequests, options.maxRequests);
-		if (options.maxRequests &#x26;&#x26; totalRequests &#x3e;= options.maxRequests)
+		log.debug('Total requests %s, max requests: %s', totalRequests, options.maxRequests);
+		if (options.maxRequests &amp;&amp; totalRequests &gt;= options.maxRequests)
 		{
-			log.debug(&#x27;Max requests reached: %s&#x27;, totalRequests);
+			log.debug('Max requests reached: %s', totalRequests);
 			return true;
 		}
 		var elapsedSeconds = getElapsed(initial ...</pre></li>
@@ -1366,7 +1359,7 @@ if (__filename == process.argv[1])
     <li>example usage<pre class="apidocCodePre">...
 {
 	var options = {
-		url: &#x27;http://localhost:7357/&#x27;,
+		url: 'http://localhost:7357/',
 		maxSeconds: 0.1,
 		concurrency: 1,
 		quiet: true,
@@ -1419,3 +1412,4 @@ if (__filename == process.argv[1])
     ]
 </div>
 </div>
+</body></html>
