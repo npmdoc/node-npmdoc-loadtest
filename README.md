@@ -3,7 +3,9 @@
 
 [![NPM](https://nodei.co/npm/loadtest.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/loadtest)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-loadtest/build/screenCapture.buildCi.browser.apidoc.html.png)](https://npmdoc.github.io/node-npmdoc-loadtest/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-loadtest/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-loadtest/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-loadtest/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-loadtest/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-loadtest/build/screenCapture.npmPackageListing.svg)
 
@@ -78,114 +80,6 @@
     "types": "index.d.ts",
     "version": "2.3.0"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module loadtest](#apidoc.module.loadtest)
-1.  [function <span class="apidocSignatureSpan">loadtest.</span>loadTest (options, callback)](#apidoc.element.loadtest.loadTest)
-1.  [function <span class="apidocSignatureSpan">loadtest.</span>startServer (options, callback)](#apidoc.element.loadtest.startServer)
-
-
-
-# <a name="apidoc.module.loadtest"></a>[module loadtest](#apidoc.module.loadtest)
-
-#### <a name="apidoc.element.loadtest.loadTest"></a>[function <span class="apidocSignatureSpan">loadtest.</span>loadTest (options, callback)](#apidoc.element.loadtest.loadTest)
-- description and source-code
-```javascript
-loadTest = function (options, callback)
-{
-	if (!options.url)
-	{
-		log.error('Missing URL in options');
-		return;
-	}
-	options.concurrency = options.concurrency || 1;
-	if (options.requestsPerSecond)
-	{
-		options.requestsPerSecond = options.requestsPerSecond / options.concurrency;
-	}
-	if (options.debug)
-	{
-		log.level = Log.DEBUG;
-	}
-	if (!options.url.startsWith('http://') && !options.url.startsWith('https://') && !options.url.startsWith('ws://'))
-	{
-		log.error('Invalid URL %s, must be http://, https:// or ws://', options.url);
-		return;
-	}
-	if (callback && !('quiet' in options))
-	{
-		options.quiet = true;
-	}
-
-	if (options.url.startsWith('ws:'))
-	{
-		if (options.requestsPerSecond)
-		{
-			log.error('"requestsPerSecond" not supported for WebSockets');
-		}
-	}
-
-	var operation = new Operation(options, callback);
-	operation.start();
-	return operation;
-}
-```
-- example usage
-```shell
-...
-To run a load test, just call the exported function 'loadTest()' with a set of options and an optional callback:
-
-var loadtest = require('loadtest');
-var options = {
-    url: 'http://localhost:8000',
-    maxRequests: 1000,
-};
-loadtest.loadTest(options, function(error, result)
-{
-    if (error)
-    {
-        return console.error('Got an error: %s', error);
-    }
-    console.log('Tests run successfully');
-});
-...
-```
-
-#### <a name="apidoc.element.loadtest.startServer"></a>[function <span class="apidocSignatureSpan">loadtest.</span>startServer (options, callback)](#apidoc.element.loadtest.startServer)
-- description and source-code
-```javascript
-startServer = function (options, callback)
-{
-	if (callback)
-	{
-		options.quiet = true;
-	}
-	var server = new TestServer(options);
-	return server.start(callback);
-}
-```
-- example usage
-```shell
-...
-    }
-
-### Start Test Server
-
-To start the test server use the exported function 'startServer()' with a set of options and an optional callback:
-
-    var testserver = require('testserver');
-    var server = testserver.startServer({ port: 8000 });
-
-This function returns an HTTP server which can be 'close()'d when it is no longer useful.
-
-The following options are available.
-
-#### 'port'
-...
 ```
 
 
