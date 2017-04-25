@@ -117,12 +117,6 @@
 
         <li>
 
-            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">loadtest.</span>testserver</span>
-
-        </li>
-
-        <li>
-
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">loadtest.</span>timing</span>
 
         </li>
@@ -214,19 +208,6 @@
 
     </ol></li>
 
-    <li class="apidocModuleLi"><a href="#apidoc.module.loadtest.loadTest">module loadtest.loadTest</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.loadtest.loadTest.loadTest">
-            function <span class="apidocSignatureSpan">loadtest.</span>loadTest
-            <span class="apidocSignatureSpan">(options, callback)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
     <li class="apidocModuleLi"><a href="#apidoc.module.loadtest.loadtest">module loadtest.loadtest</a><ol>
 
         <li>
@@ -255,41 +236,6 @@
 
             <a class="apidocElementLiA" href="#apidoc.element.loadtest.request_generator.test">
             function <span class="apidocSignatureSpan">loadtest.request_generator.</span>test
-            <span class="apidocSignatureSpan">(callback)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.loadtest.startServer">module loadtest.startServer</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.loadtest.startServer.startServer">
-            function <span class="apidocSignatureSpan">loadtest.</span>startServer
-            <span class="apidocSignatureSpan">(options, callback)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.loadtest.testserver">module loadtest.testserver</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.loadtest.testserver.startServer">
-            function <span class="apidocSignatureSpan">loadtest.testserver.</span>startServer
-            <span class="apidocSignatureSpan">(options, callback)</span>
-            </a>
-
-        </li>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.loadtest.testserver.test">
-            function <span class="apidocSignatureSpan">loadtest.testserver.</span>test
             <span class="apidocSignatureSpan">(callback)</span>
             </a>
 
@@ -473,8 +419,6 @@ The following options are available.
 
 
 
-
-
 </div>
 
 <div class="apidocSectionDiv">
@@ -530,21 +474,20 @@ The following options are available.
 	}
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-			raw: &#x27;k:v:w&#x27;,
-			headers: { &#x27;k&#x27;: &#x27;v:w&#x27; }
-		}
-	];
-	tests.forEach(function(test)
-	{
-		var headers = {};
-		exports.<span class="apidocCodeKeywordSpan">addHeaders</span>(test.raw, headers);
-		testing.assertEquals(headers, test.headers, &#x27;Wrong headers&#x27;, callback);
-	});
-	testing.success(callback);
+	host: urlLib.parse(options.url).host,
+	&#x27;user-agent&#x27;: &#x27;loadtest/&#x27; + packageJson.version,
+	accept: &#x27;*/*&#x27;
+};
+
+if (options.headers)
+{
+	headers.<span class="apidocCodeKeywordSpan">addHeaders</span>(options.headers, defaultHeaders);
+	console.log(&#x27;headers: %s, %j&#x27;, typeof defaultHeaders, defaultHeaders);
 }
 
-/**
-* Add a user-agent header if not present.
+if (options.requestGenerator) {
+    options.requestGenerator = require(path.resolve(options.requestGenerator));
+}
 ...</pre></li>
     </ul>
 
@@ -711,77 +654,6 @@ if (__filename == process.argv[1])
 </div>
 
 <div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.loadtest.loadTest" id="apidoc.module.loadtest.loadTest">module loadtest.loadTest</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.loadtest.loadTest.loadTest" id="apidoc.element.loadtest.loadTest.loadTest">
-        function <span class="apidocSignatureSpan">loadtest.</span>loadTest
-        <span class="apidocSignatureSpan">(options, callback)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">loadTest = function (options, callback)
-{
-	if (!options.url)
-	{
-		log.error(&#x27;Missing URL in options&#x27;);
-		return;
-	}
-	options.concurrency = options.concurrency || 1;
-	if (options.requestsPerSecond)
-	{
-		options.requestsPerSecond = options.requestsPerSecond / options.concurrency;
-	}
-	if (options.debug)
-	{
-		log.level = Log.DEBUG;
-	}
-	if (!options.url.startsWith(&#x27;http://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;https://&#x27;) &#x26;&#x26; !options.url.startsWith(&#x27;ws://&#x27;))
-	{
-		log.error(&#x27;Invalid URL %s, must be http://, https:// or ws://&#x27;, options.url);
-		return;
-	}
-	if (callback &#x26;&#x26; !(&#x27;quiet&#x27; in options))
-	{
-		options.quiet = true;
-	}
-
-	if (options.url.startsWith(&#x27;ws:&#x27;))
-	{
-		if (options.requestsPerSecond)
-		{
-			log.error(&#x27;&#x22;requestsPerSecond&#x22; not supported for WebSockets&#x27;);
-		}
-	}
-
-	var operation = new Operation(options, callback);
-	operation.start();
-	return operation;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-To run a load test, just call the exported function `loadTest()` with a set of options and an optional callback:
-
-var loadtest = require(&#x27;loadtest&#x27;);
-var options = {
-    url: &#x27;http://localhost:8000&#x27;,
-    maxRequests: 1000,
-};
-loadtest.<span class="apidocCodeKeywordSpan">loadTest</span>(options, function(error, result)
-{
-    if (error)
-    {
-        return console.error(&#x27;Got an error: %s&#x27;, error);
-    }
-    console.log(&#x27;Tests run successfully&#x27;);
-});
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.loadtest.loadtest" id="apidoc.module.loadtest.loadtest">module loadtest.loadtest</a></h1>
 
 
@@ -893,114 +765,6 @@ if (__filename == process.argv[1])
 {
 	log.debug(&#x27;Running all tests&#x27;);
 	testing.run([testRequestGenerator], 4000, callback);
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-	});
-	testing.run(tests, 4200, callback);
-};
-
-// run tests if invoked directly
-if (__filename == process.argv[1])
-{
-	exports.<span class="apidocCodeKeywordSpan">test</span>(testing.show);
-}
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.loadtest.startServer" id="apidoc.module.loadtest.startServer">module loadtest.startServer</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.loadtest.startServer.startServer" id="apidoc.element.loadtest.startServer.startServer">
-        function <span class="apidocSignatureSpan">loadtest.</span>startServer
-        <span class="apidocSignatureSpan">(options, callback)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">startServer = function (options, callback)
-{
-	if (callback)
-	{
-		options.quiet = true;
-	}
-	var server = new TestServer(options);
-	return server.start(callback);
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-    }
-
-### Start Test Server
-
-To start the test server use the exported function `startServer()` with a set of options and an optional callback:
-
-    var testserver = require(&#x27;testserver&#x27;);
-    var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
-
-This function returns an HTTP server which can be `close()`d when it is no longer useful.
-
-The following options are available.
-
-#### `port`
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.loadtest.testserver" id="apidoc.module.loadtest.testserver">module loadtest.testserver</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.loadtest.testserver.startServer" id="apidoc.element.loadtest.testserver.startServer">
-        function <span class="apidocSignatureSpan">loadtest.testserver.</span>startServer
-        <span class="apidocSignatureSpan">(options, callback)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">startServer = function (options, callback)
-{
-	if (callback)
-	{
-		options.quiet = true;
-	}
-	var server = new TestServer(options);
-	return server.start(callback);
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-    }
-
-### Start Test Server
-
-To start the test server use the exported function `startServer()` with a set of options and an optional callback:
-
-    var testserver = require(&#x27;testserver&#x27;);
-    var server = testserver.<span class="apidocCodeKeywordSpan">startServer</span>({ port: 8000 });
-
-This function returns an HTTP server which can be `close()`d when it is no longer useful.
-
-The following options are available.
-
-#### `port`
-...</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.loadtest.testserver.test" id="apidoc.element.loadtest.testserver.test">
-        function <span class="apidocSignatureSpan">loadtest.testserver.</span>test
-        <span class="apidocSignatureSpan">(callback)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">test = function (callback)
-{
-	testing.run([testStartServer], 5000, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 	});
