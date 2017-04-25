@@ -1,7 +1,7 @@
 {
     "author": "kai zhu <kaizhu256@gmail.com>",
     "buildNpmdoc": "loadtest",
-    "description": "api documentation for [loadtest (v2.3.0)](https://github.com/alexfernandez/loadtest) [![npm package](https://img.shields.io/npm/v/npmdoc-loadtest.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-loadtest) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-loadtest.svg)](https://travis-ci.org/npmdoc/node-npmdoc-loadtest)",
+    "description": "#### basic api documentation for  [loadtest (v2.3.0)](https://github.com/alexfernandez/loadtest)  [![npm package](https://img.shields.io/npm/v/npmdoc-loadtest.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-loadtest) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-loadtest.svg)](https://travis-ci.org/npmdoc/node-npmdoc-loadtest)",
     "devDependencies": {
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "loadtest": "*",
